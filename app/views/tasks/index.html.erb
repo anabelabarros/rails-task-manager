@@ -1,0 +1,28 @@
+<h1>Tasks</h1>
+
+  <%= form_with model: @task, url: tasks_path do |form| %>
+   <div>
+     <%= form.label :title %>
+     <%= form.text_field :title %>
+   </div>
+
+   <div>
+     <%= form.label :details %>
+     <%= form.text_area :details %>
+   </div>
+
+   <div>
+     <%= form.label :completed %>
+     <%= form.check_box :completed %>
+   </div>
+    <%= form.submit %>
+  <% end %>
+
+    <ul>
+    <% @tasks.each do |task| %>
+     <li>
+      <%= link_to task.title, task_path(task) %>
+      <%= link_to 'Delete', delete_task_path(task), method: :delete, data: { confirm: 'Are you sure?' }  %>
+    </li>
+    <% end %>
+  </ul>

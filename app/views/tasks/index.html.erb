@@ -1,28 +1,25 @@
-<h1>Tasks</h1>
+<div class="container mt-5">
+ <h1>My Tasks</h1>
 
-  <%= form_with model: @task, url: tasks_path do |form| %>
-   <div>
-     <%= form.label :title %>
-     <%= form.text_field :title %>
-   </div>
-
-   <div>
-     <%= form.label :details %>
-     <%= form.text_area :details %>
-   </div>
-
-   <div>
-     <%= form.label :completed %>
-     <%= form.check_box :completed %>
-   </div>
-    <%= form.submit %>
-  <% end %>
-
-    <ul>
+<ul id="tasks">
     <% @tasks.each do |task| %>
-     <li>
-      <%= link_to task.title, task_path(task) %>
-      <%= link_to 'Delete', delete_task_path(task), method: :delete, data: { confirm: 'Are you sure?' }  %>
-    </li>
+      <li>
+        <% if task.completed? %>
+          <i class="fa-regular fa-square-check"></i>
+        <% else %>
+          <i class="fa-regular fa-square"></i>
+        <% end %>
+        <%= link_to task.title, task_path(task.id) %>
+        <%= link_to task_path(task.id), data: {turbo_method: :delete, turbo_confirm: "Delete #{task.title}?"} do %>
+          <i class="fa-regular fa-trash-can"></i>
+        <% end %>
+      </li>
     <% end %>
   </ul>
+
+  <hr>
+
+  <%= link_to new_task_path do %>
+    <i class="fa-solid fa-plus"></i> Add a new task
+  <% end %>
+</div>
